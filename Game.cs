@@ -9,9 +9,20 @@ namespace Chess
     {
         static void Main(string[] args)
         {
-            ChessPosition chessPosition = new ChessPosition('a', 1);
-            Console.WriteLine(chessPosition);
-            Console.WriteLine(chessPosition.toPosition());
+            try
+            {
+                Board board = new Board(8, 8);
+
+                board.PutPiece(new King(Colour.black, board), new Position(0, 0));
+                board.PutPiece(new Rook(Colour.white, board), new Position(1, 5));
+                board.PutPiece(new Rook(Colour.black, board), new Position(1, 0));
+
+                Cover.PrintBoard(board);
+            }
+            catch(BoardException e)
+            {
+                Console.WriteLine($"Operation Error: {e.Message}");
+            }
         }
     }
 }
