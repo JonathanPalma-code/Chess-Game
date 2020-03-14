@@ -41,6 +41,18 @@ namespace board
             newPiece.Position = newPosition;
         }
 
+        public Piece TakePiece(Position position)
+        {
+            if(Piece(position) == null)
+            {
+                return null;
+            }
+            Piece newPiece = Piece(position);
+            newPiece.Position = null;
+            pieces[position.Row, position.Column] = null;
+            return newPiece;
+        }
+
         public bool IfValidPosition(Position position)
         {
             if(position.Row < 0 || position.Row >= Rows || position.Column < 0 || position.Column >= Columns)

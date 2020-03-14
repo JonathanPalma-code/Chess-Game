@@ -11,13 +11,21 @@ namespace Chess
         {
             try
             {
-                Board board = new Board(8, 8);
+                ChessTurns chessTurns = new ChessTurns();
 
-                board.PutPiece(new King(Colour.black, board), new Position(0, 0));
-                board.PutPiece(new Rook(Colour.white, board), new Position(1, 5));
-                board.PutPiece(new Rook(Colour.black, board), new Position(1, 0));
+                while (!chessTurns.EndOfTurn)
+                {
+                    Console.Clear();
+                    Cover.PrintBoard(chessTurns.Board);
 
-                Cover.PrintBoard(board);
+                    Console.WriteLine("\nOrigin: ");
+                    Position origin = Cover.ReadPiecePosition().toPosition();
+                    Console.WriteLine("Destination: ");
+                    Position destination = Cover.ReadPiecePosition().toPosition();
+
+                    chessTurns.MovePiece(origin, destination);
+                }
+                Cover.PrintBoard(chessTurns.Board);
             }
             catch(BoardException e)
             {

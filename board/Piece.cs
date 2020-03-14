@@ -14,5 +14,10 @@
             Board = board;
             MovementsQuantity = 0;
         }
+
+        public void AddMovements()
+        {
+            MovementsQuantity++;
+        }
     }
 }
