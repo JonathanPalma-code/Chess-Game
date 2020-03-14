@@ -1,6 +1,6 @@
 ﻿using board;
 
-namespace chessPieces
+namespace chessGame
 {
     class Rook : Piece
     {
