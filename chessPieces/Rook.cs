@@ -2,16 +2,16 @@
 
 namespace chessPieces
 {
-    class Tower : Piece
+    class Rook : Piece
     {
-        public Tower(Colour colour, Board board)
+        public Rook(Colour colour, Board board)
             : base(colour, board)
         {
         }
 
         public override string ToString()
         {
-            return "T";
+            return "R";
         }
     }
 }
