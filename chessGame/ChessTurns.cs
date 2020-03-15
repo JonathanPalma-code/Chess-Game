@@ -1,5 +1,4 @@
-﻿using System;
-using board;
+﻿using board;
 
 namespace chessGame
 {
@@ -8,7 +7,7 @@ namespace chessGame
         public Board Board { get; private set; }
         private int Turn;
         private Colour ActualPlayer;
-        public bool EndOfTurn { get; set; }
+        public bool EndOfTurn { get; private set; }
 
         public ChessTurns()
         {
@@ -29,9 +28,19 @@ namespace chessGame
 
         private void PutPieces()
         {
-            Board.PutPiece(new King(Colour.black, Board), new ChessPosition('a', 1).toPosition());
-            Board.PutPiece(new Rook(Colour.white, Board), new ChessPosition('b', 8).toPosition());
-            Board.PutPiece(new Rook(Colour.black, Board), new ChessPosition('h', 8).toPosition());
+            Board.PutPiece(new Rook(Board, Colour.white), new ChessPosition('c', 1).ToPosition());
+            Board.PutPiece(new Rook(Board, Colour.white), new ChessPosition('c', 2).ToPosition());
+            Board.PutPiece(new King(Board, Colour.white), new ChessPosition('d', 1).ToPosition());
+            Board.PutPiece(new Rook(Board, Colour.white), new ChessPosition('d', 2).ToPosition());
+            Board.PutPiece(new Rook(Board, Colour.white), new ChessPosition('e', 1).ToPosition());
+            Board.PutPiece(new Rook(Board, Colour.white), new ChessPosition('e', 2).ToPosition());
+
+            Board.PutPiece(new Rook(Board, Colour.black), new ChessPosition('c', 7).ToPosition());
+            Board.PutPiece(new Rook(Board, Colour.black), new ChessPosition('c', 8).ToPosition());
+            Board.PutPiece(new King(Board, Colour.black), new ChessPosition('d', 8).ToPosition());
+            Board.PutPiece(new Rook(Board, Colour.black), new ChessPosition('d', 7).ToPosition());
+            Board.PutPiece(new Rook(Board, Colour.black), new ChessPosition('e', 7).ToPosition());
+            Board.PutPiece(new Rook(Board, Colour.black), new ChessPosition('e', 8).ToPosition());
         }
     }
 }

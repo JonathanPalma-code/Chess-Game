@@ -38,7 +38,7 @@ namespace board
                 throw new BoardException("The position is already occupied by a piece.");
             }
             pieces[newPosition.Row, newPosition.Column] = newPiece;
-            newPiece.Position = newPosition;
+            newPiece.PiecePosition = newPosition;
         }
 
         public Piece TakePiece(Position position)
@@ -48,7 +48,7 @@ namespace board
                 return null;
             }
             Piece newPiece = Piece(position);
-            newPiece.Position = null;
+            newPiece.PiecePosition = null;
             pieces[position.Row, position.Column] = null;
             return newPiece;
         }

@@ -18,14 +18,20 @@ namespace Chess
                     Console.Clear();
                     Cover.PrintBoard(chessTurns.Board);
 
-                    Console.WriteLine("\nOrigin: ");
-                    Position origin = Cover.ReadPiecePosition().toPosition();
-                    Console.WriteLine("Destination: ");
-                    Position destination = Cover.ReadPiecePosition().toPosition();
+                    Console.Write("\nOrigin: ");
+                    Position origin = Cover.ReadPiecePosition().ToPosition();
+
+                    bool[,] possiblePosition = chessTurns.Board.Piece(origin).PossibleMovements();
+
+                    Console.Clear();
+                    Cover.PrintBoard(chessTurns.Board, possiblePosition);
+
+                    Console.Write("\nDestination: ");
+                    Position destination = Cover.ReadPiecePosition().ToPosition();
 
                     chessTurns.MovePiece(origin, destination);
                 }
-                Cover.PrintBoard(chessTurns.Board);
+                // Cover.PrintBoard(chessTurns.Board);
             }
             catch(BoardException e)
             {
