@@ -15,23 +15,33 @@ namespace Chess
 
                 while (!chessTurns.EndOfTurn)
                 {
-                    Console.Clear();
-                    Cover.PrintBoard(chessTurns.Board);
+                    try
+                    {
+                        Console.Clear();
+                        Cover.PrintBoard(chessTurns.Board);
+                        Console.WriteLine($"\nTurn: {chessTurns.Turn}");
+                        Console.WriteLine($"Waiting for the {chessTurns.PlayerTurn} Player move...");
 
-                    Console.Write("\nOrigin: ");
-                    Position origin = Cover.ReadPiecePosition().ToPosition();
+                        Console.Write("\nOrigin: ");
+                        Position origin = Cover.ReadPiecePosition().ToPosition();
+                        chessTurns.OriginPositionValidation(origin);
 
-                    bool[,] possiblePosition = chessTurns.Board.Piece(origin).PossibleMovements();
+                        bool[,] possiblePosition = chessTurns.Board.Piece(origin).PossibleMovements();
 
-                    Console.Clear();
-                    Cover.PrintBoard(chessTurns.Board, possiblePosition);
+                        Console.Clear();
+                        Cover.PrintBoard(chessTurns.Board, possiblePosition);
 
-                    Console.Write("\nDestination: ");
-                    Position destination = Cover.ReadPiecePosition().ToPosition();
-
-                    chessTurns.MovePiece(origin, destination);
+                        Console.Write("\nDestination: ");
+                        Position destination = Cover.ReadPiecePosition().ToPosition();
+                        chessTurns.DestinationPositionValidation(origin, destination);
+                        chessTurns.Play(origin, destination);
+                    }
+                    catch (BoardException e)
+                    {
+                        Console.WriteLine(e.Message);
+                        Console.ReadLine();
+                    }
                 }
-                // Cover.PrintBoard(chessTurns.Board);
             }
             catch(BoardException e)
             {

@@ -1,19 +1,20 @@
 ﻿using board;
+using board.exceptions;
 
 namespace chessGame
 {
     class ChessTurns
     {
         public Board Board { get; private set; }
-        private int Turn;
-        private Colour ActualPlayer;
+        public int Turn { get; private set; }
+        public Colour PlayerTurn { get; private set; }
         public bool EndOfTurn { get; private set; }
 
         public ChessTurns()
         {
             Board = new Board(8, 8);
             Turn = 1;
-            ActualPlayer = Colour.white;
+            PlayerTurn = Colour.white;
             EndOfTurn = false;
             PutPieces();
         }
@@ -24,6 +25,49 @@ namespace chessGame
             piece.AddMovements();
             Piece pieceCaptured = Board.TakePiece(destination);
             Board.PutPiece(piece, destination);
+        }
+
+        public void Play(Position origin, Position destination)
+        {
+            MovePiece(origin, destination);
+            Turn++;
+            ChangePlayer();
+        }
+
+        public void OriginPositionValidation(Position position)
+        {
+            if (Board.Piece(position) == null)
+            {
+                throw new BoardException("There is no piece in the position of origin chosen.");
+            }
+            if (PlayerTurn != Board.Piece(position).Colour)
+            {
+                throw new BoardException("The piece chosen it is not yours.");
+            }
+            if (!Board.Piece(position).PossibleMovementsAvailable())
+            {
+                throw new BoardException("There is no possible moviments from the piece chosen.");
+            }
+        }
+
+        public void DestinationPositionValidation(Position origin, Position destination)
+        {
+              if (!Board.Piece(origin).CanMoveTo(destination))
+            {
+                throw new BoardException("Position of destination invalid.");
+            }
+        }
+
+        private void ChangePlayer()
+        {
+            if(PlayerTurn == Colour.white)
+            {
+                PlayerTurn = Colour.black;
+            }
+            else
+            {
+                PlayerTurn = Colour.white;
+            }
         }
 
         private void PutPieces()
