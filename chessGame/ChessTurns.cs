@@ -12,6 +12,7 @@ namespace chessGame
         public bool EndOfTurn { get; private set; }
         private HashSet<Piece> Pieces;
         private HashSet<Piece> Captured;
+        public bool Xeque { get; private set; }
 
         public ChessTurns()
         {
@@ -19,12 +20,13 @@ namespace chessGame
             Turn = 1;
             PlayerTurn = Colour.white;
             EndOfTurn = false;
+            Xeque = false;
             Pieces = new HashSet<Piece>();
             Captured = new HashSet<Piece>();
             PutPieces();
         }
 
-        public void MovePiece(Position origin, Position destination)
+        public Piece MovePiece(Position origin, Position destination)
         {
             Piece piece = Board.TakePiece(origin);
             piece.AddMovements();
@@ -34,11 +36,39 @@ namespace chessGame
             {
                 Captured.Add(pieceCaptured);
             }
+            return pieceCaptured;
+        }
+
+        public void UnmakeMovement(Position origin, Position destination, Piece pieceCaptured)
+        {
+            Piece piece = Board.TakePiece(destination);
+            piece.UnAddMovements();
+            if(pieceCaptured != null)
+            {
+                Board.PutPiece(pieceCaptured, destination);
+                Captured.Remove(pieceCaptured);
+            }
+            Board.PutPiece(piece, origin);
         }
 
         public void Play(Position origin, Position destination)
         {
-            MovePiece(origin, destination);
+            Piece pieceCaptured = MovePiece(origin, destination);
+            if (IsInXeque(PlayerTurn))
+            {
+                UnmakeMovement(origin, destination, pieceCaptured);
+                throw new BoardException("You cannot execute this movement, you will be in Xeque.");
+            }
+
+            if (IsInXeque(Opponent(PlayerTurn)))
+            {
+                Xeque = true;
+            }
+            else
+            {
+                Xeque = false;
+            }
+
             Turn++;
             ChangePlayer();
         }
@@ -106,12 +136,53 @@ namespace chessGame
             return pieces;
         }
 
+        private Colour Opponent(Colour colour)
+        {
+            if (colour == Colour.white)
+            {
+                return Colour.black;
+            }
+            else
+            {
+                return Colour.white;
+            }
+        }
+
+        private Piece King(Colour colour)
+        {
+            foreach (Piece piece in PiecesInGame(colour))
+            {
+                if (piece is King)
+                {
+                    return piece;
+                }
+            }
+            return null;
+        }
+
         public void PutNewPiece(char column, int row, Piece piece)
         {
             Board.PutPiece(piece, new ChessPosition(column, row).ToPosition());
             Pieces.Add(piece);
         }
 
+        public bool IsInXeque(Colour colour)
+        {
+            Piece K = King(colour);
+            if (K == null)
+            {
+                throw new BoardException($"There is no {colour} King in the game.");
+            }
+            foreach (Piece piece in PiecesInGame(Opponent(colour)))
+            {
+                bool[,] vs = piece.PossibleMovements();
+                if (vs[K.PiecePosition.Row, K.PiecePosition.Column])
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
         private void PutPieces()
         {
             PutNewPiece('c', 1, new Rook(Board, Colour.white));

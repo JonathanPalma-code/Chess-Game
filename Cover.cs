@@ -13,6 +13,10 @@ namespace Chess
             PrintCapturedPieces(chessTurns);
             Console.WriteLine($"\n\nTurn: {chessTurns.Turn}");
             Console.WriteLine($"{chessTurns.PlayerTurn} Player's turn...");
+            if (chessTurns.Xeque)
+            {
+                Console.WriteLine("XEQUE!");
+            }
         }
 
         public static void PrintCapturedPieces(ChessTurns chessTurns)

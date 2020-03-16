@@ -20,6 +20,11 @@
             MovementsQuantity++;
         }
 
+        public void UnAddMovements()
+        {
+            MovementsQuantity--;
+        }
+
         public bool PossibleMovementsAvailable()
         {
             bool[,] move = PossibleMovements();
