@@ -1,5 +1,6 @@
 ﻿using board;
 using board.exceptions;
+using System.Collections.Generic;
 
 namespace chessGame
 {
@@ -9,6 +10,8 @@ namespace chessGame
         public int Turn { get; private set; }
         public Colour PlayerTurn { get; private set; }
         public bool EndOfTurn { get; private set; }
+        private HashSet<Piece> Pieces;
+        private HashSet<Piece> Captured;
 
         public ChessTurns()
         {
@@ -16,6 +19,8 @@ namespace chessGame
             Turn = 1;
             PlayerTurn = Colour.white;
             EndOfTurn = false;
+            Pieces = new HashSet<Piece>();
+            Captured = new HashSet<Piece>();
             PutPieces();
         }
 
@@ -25,6 +30,10 @@ namespace chessGame
             piece.AddMovements();
             Piece pieceCaptured = Board.TakePiece(destination);
             Board.PutPiece(piece, destination);
+            if (pieceCaptured != null)
+            {
+                Captured.Add(pieceCaptured);
+            }
         }
 
         public void Play(Position origin, Position destination)
@@ -70,21 +79,54 @@ namespace chessGame
             }
         }
 
+        public HashSet<Piece> PiecesCaptured(Colour colour)
+        {
+            HashSet<Piece> pieces = new HashSet<Piece>();
+            foreach (Piece model in Captured)
+            {
+                if (model.Colour == colour)
+                {
+                    pieces.Add(model);
+                }
+            }
+            return pieces;
+        }
+
+        public HashSet<Piece> PiecesInGame(Colour colour)
+        {
+            HashSet<Piece> pieces = new HashSet<Piece>();
+            foreach (Piece model in Pieces)
+            {
+                if (model.Colour == colour)
+                {
+                    pieces.Add(model);
+                }
+            }
+            pieces.ExceptWith(PiecesCaptured(colour));
+            return pieces;
+        }
+
+        public void PutNewPiece(char column, int row, Piece piece)
+        {
+            Board.PutPiece(piece, new ChessPosition(column, row).ToPosition());
+            Pieces.Add(piece);
+        }
+
         private void PutPieces()
         {
-            Board.PutPiece(new Rook(Board, Colour.white), new ChessPosition('c', 1).ToPosition());
-            Board.PutPiece(new Rook(Board, Colour.white), new ChessPosition('c', 2).ToPosition());
-            Board.PutPiece(new King(Board, Colour.white), new ChessPosition('d', 1).ToPosition());
-            Board.PutPiece(new Rook(Board, Colour.white), new ChessPosition('d', 2).ToPosition());
-            Board.PutPiece(new Rook(Board, Colour.white), new ChessPosition('e', 1).ToPosition());
-            Board.PutPiece(new Rook(Board, Colour.white), new ChessPosition('e', 2).ToPosition());
+            PutNewPiece('c', 1, new Rook(Board, Colour.white));
+            PutNewPiece('c', 2, new Rook(Board, Colour.white));
+            PutNewPiece('d', 1, new King(Board, Colour.white));
+            PutNewPiece('d', 2, new Rook(Board, Colour.white));
+            PutNewPiece('e', 1, new Rook(Board, Colour.white));
+            PutNewPiece('e', 2, new Rook(Board, Colour.white));
 
-            Board.PutPiece(new Rook(Board, Colour.black), new ChessPosition('c', 7).ToPosition());
-            Board.PutPiece(new Rook(Board, Colour.black), new ChessPosition('c', 8).ToPosition());
-            Board.PutPiece(new King(Board, Colour.black), new ChessPosition('d', 8).ToPosition());
-            Board.PutPiece(new Rook(Board, Colour.black), new ChessPosition('d', 7).ToPosition());
-            Board.PutPiece(new Rook(Board, Colour.black), new ChessPosition('e', 7).ToPosition());
-            Board.PutPiece(new Rook(Board, Colour.black), new ChessPosition('e', 8).ToPosition());
+            PutNewPiece('c', 7, new Rook(Board, Colour.black));
+            PutNewPiece('c', 8, new Rook(Board, Colour.black));
+            PutNewPiece('d', 8, new King(Board, Colour.black));
+            PutNewPiece('d', 7, new Rook(Board, Colour.black));
+            PutNewPiece('e', 7, new Rook(Board, Colour.black));
+            PutNewPiece('e', 8, new Rook(Board, Colour.black));
         }
     }
 }

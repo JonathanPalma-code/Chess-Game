@@ -18,9 +18,7 @@ namespace Chess
                     try
                     {
                         Console.Clear();
-                        Cover.PrintBoard(chessTurns.Board);
-                        Console.WriteLine($"\nTurn: {chessTurns.Turn}");
-                        Console.WriteLine($"Waiting for the {chessTurns.PlayerTurn} Player move...");
+                        Cover.PrintGame(chessTurns);
 
                         Console.Write("\nOrigin: ");
                         Position origin = Cover.ReadPiecePosition().ToPosition();
