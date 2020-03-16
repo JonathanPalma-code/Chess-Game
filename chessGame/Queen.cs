@@ -2,14 +2,14 @@
 
 namespace chessGame
 {
-    class Rook : Piece
+    class Queen : Piece
     {
-        public Rook(Board board, Colour colour)
+        public Queen(Board board, Colour colour)
             : base(board, colour) { }
 
         public override string ToString()
         {
-            return "R";
+            return "Q";
         }
 
         private bool CanMove(Position position)
@@ -71,6 +71,55 @@ namespace chessGame
                     break;
                 }
                 position.Column -= 1;
+            }
+
+            // To go north east
+            position.DefineValues(PiecePosition.Row - 1, PiecePosition.Column - 1);
+            while (Board.IfValidPosition(position) && CanMove(position))
+            {
+                boolboard[position.Row, position.Column] = true;
+                if (Board.Piece(position) != null && Board.Piece(position).Colour != Colour)
+                {
+                    break;
+                }
+                position.DefineValues(position.Row - 1, position.Column - 1);
+            }
+
+
+            // To go south east
+            position.DefineValues(PiecePosition.Row + 1, PiecePosition.Column + 1);
+            while (Board.IfValidPosition(position) && CanMove(position))
+            {
+                boolboard[position.Row, position.Column] = true;
+                if (Board.Piece(position) != null && Board.Piece(position).Colour != Colour)
+                {
+                    break;
+                }
+                position.DefineValues(position.Row + 1, position.Column + 1);
+            }
+
+            // To go south west
+            position.DefineValues(PiecePosition.Row + 1, PiecePosition.Column - 1);
+            while (Board.IfValidPosition(position) && CanMove(position))
+            {
+                boolboard[position.Row, position.Column] = true;
+                if (Board.Piece(position) != null && Board.Piece(position).Colour != Colour)
+                {
+                    break;
+                }
+                position.DefineValues(position.Row + 1, position.Column - 1);
+            }
+
+            // To go north west
+            position.DefineValues(PiecePosition.Row - 1, PiecePosition.Column + 1);
+            while (Board.IfValidPosition(position) && CanMove(position))
+            {
+                boolboard[position.Row, position.Column] = true;
+                if (Board.Piece(position) != null && Board.Piece(position).Colour != Colour)
+                {
+                    break;
+                }
+                position.DefineValues(position.Row - 1, position.Column + 1);
             }
 
             return boolboard;

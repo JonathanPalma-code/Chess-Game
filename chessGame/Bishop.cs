@@ -2,14 +2,16 @@
 
 namespace chessGame
 {
-    class Rook : Piece
+    class Bishop : Piece
     {
-        public Rook(Board board, Colour colour)
-            : base(board, colour) { }
+        public Bishop(Board board, Colour colour)
+            : base(board, colour)
+        {
+        }
 
         public override string ToString()
         {
-            return "R";
+            return "B";
         }
 
         private bool CanMove(Position position)
@@ -24,8 +26,8 @@ namespace chessGame
 
             Position position = new Position(0, 0);
 
-            // To go north
-            position.DefineValues(PiecePosition.Row - 1, PiecePosition.Column);
+            // To go north east
+            position.DefineValues(PiecePosition.Row - 1, PiecePosition.Column - 1);
             while (Board.IfValidPosition(position) && CanMove(position))
             {
                 boolboard[position.Row, position.Column] = true;
@@ -33,12 +35,12 @@ namespace chessGame
                 {
                     break;
                 }
-                position.Row -= 1;
+                position.DefineValues(position.Row - 1, position.Column - 1);
             }
 
 
-            // To go east
-            position.DefineValues(PiecePosition.Row, PiecePosition.Column + 1);
+            // To go south east
+            position.DefineValues(PiecePosition.Row + 1, PiecePosition.Column + 1);
             while (Board.IfValidPosition(position) && CanMove(position))
             {
                 boolboard[position.Row, position.Column] = true;
@@ -46,11 +48,11 @@ namespace chessGame
                 {
                     break;
                 }
-                position.Column += 1;
+                position.DefineValues(position.Row + 1, position.Column + 1);
             }
 
-            // To go south
-            position.DefineValues(PiecePosition.Row + 1, PiecePosition.Column);
+            // To go south west
+            position.DefineValues(PiecePosition.Row + 1, PiecePosition.Column - 1);
             while (Board.IfValidPosition(position) && CanMove(position))
             {
                 boolboard[position.Row, position.Column] = true;
@@ -58,11 +60,11 @@ namespace chessGame
                 {
                     break;
                 }
-                position.Row += 1;
+                position.DefineValues(position.Row + 1, position.Column - 1);
             }
 
-            // To go west
-            position.DefineValues(PiecePosition.Row, PiecePosition.Column - 1);
+            // To go north west
+            position.DefineValues(PiecePosition.Row - 1, PiecePosition.Column + 1);
             while (Board.IfValidPosition(position) && CanMove(position))
             {
                 boolboard[position.Row, position.Column] = true;
@@ -70,7 +72,7 @@ namespace chessGame
                 {
                     break;
                 }
-                position.Column -= 1;
+                position.DefineValues(position.Row - 1, position.Column + 1);
             }
 
             return boolboard;

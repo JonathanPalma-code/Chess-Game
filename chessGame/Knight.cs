@@ -2,14 +2,14 @@
 
 namespace chessGame
 {
-    class King : Piece
+    class Knight : Piece
     {
-        public King(Board board, Colour colour)
+        public Knight(Board board, Colour colour)
             : base(board, colour) { }
 
         public override string ToString()
         {
-            return "K";
+            return "H";
         }
 
         private bool CanMove(Position position)
@@ -24,57 +24,49 @@ namespace chessGame
 
             Position position = new Position(0, 0);
 
-            // To go north
-            position.DefineValues(PiecePosition.Row - 1, PiecePosition.Column);
-            if(Board.IfValidPosition(position) && CanMove(position))
-            {
-                boolboard[position.Row, position.Column] = true;
-            }
-
-            // To go north east
-            position.DefineValues(PiecePosition.Row - 1, PiecePosition.Column + 1);
+            position.DefineValues(PiecePosition.Row - 1, PiecePosition.Column - 2);
             if (Board.IfValidPosition(position) && CanMove(position))
             {
                 boolboard[position.Row, position.Column] = true;
             }
 
-            // To go east
-            position.DefineValues(PiecePosition.Row , PiecePosition.Column + 1);
+            position.DefineValues(PiecePosition.Row - 2, PiecePosition.Column - 1);
             if (Board.IfValidPosition(position) && CanMove(position))
             {
                 boolboard[position.Row, position.Column] = true;
             }
 
-            // To go south east
-            position.DefineValues(PiecePosition.Row + 1, PiecePosition.Column + 1);
+            position.DefineValues(PiecePosition.Row - 2, PiecePosition.Column + 1);
             if (Board.IfValidPosition(position) && CanMove(position))
             {
                 boolboard[position.Row, position.Column] = true;
             }
 
-            // To go south
-            position.DefineValues(PiecePosition.Row + 1, PiecePosition.Column);
+            position.DefineValues(PiecePosition.Row - 1, PiecePosition.Column + 2);
             if (Board.IfValidPosition(position) && CanMove(position))
             {
                 boolboard[position.Row, position.Column] = true;
             }
 
-            // To go south west
-            position.DefineValues(PiecePosition.Row + 1, PiecePosition.Column - 1);
+            position.DefineValues(PiecePosition.Row + 1, PiecePosition.Column + 2);
             if (Board.IfValidPosition(position) && CanMove(position))
             {
                 boolboard[position.Row, position.Column] = true;
             }
 
-            // To go west
-            position.DefineValues(PiecePosition.Row, PiecePosition.Column - 1);
+            position.DefineValues(PiecePosition.Row + 2, PiecePosition.Column + 1);
             if (Board.IfValidPosition(position) && CanMove(position))
             {
                 boolboard[position.Row, position.Column] = true;
             }
 
-            // To go north west
-            position.DefineValues(PiecePosition.Row - 1, PiecePosition.Column - 1);
+            position.DefineValues(PiecePosition.Row + 2, PiecePosition.Column - 1);
+            if (Board.IfValidPosition(position) && CanMove(position))
+            {
+                boolboard[position.Row, position.Column] = true;
+            }
+
+            position.DefineValues(PiecePosition.Row + 1, PiecePosition.Column - 2);
             if (Board.IfValidPosition(position) && CanMove(position))
             {
                 boolboard[position.Row, position.Column] = true;

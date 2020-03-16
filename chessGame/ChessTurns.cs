@@ -223,12 +223,41 @@ namespace chessGame
         }
         private void PutPieces()
         {
-            PutNewPiece('c', 1, new Rook(Board, Colour.white));
-            PutNewPiece('d', 1, new King(Board, Colour.white));
-            PutNewPiece('h', 7, new Rook(Board, Colour.white));
+            PutNewPiece('a', 1, new Rook(Board, Colour.white));
+            PutNewPiece('b', 1, new Knight(Board, Colour.white));
+            PutNewPiece('c', 1, new Bishop(Board, Colour.white));
+            PutNewPiece('d', 1, new Queen(Board, Colour.white));
+            PutNewPiece('e', 1, new King(Board, Colour.white));
+            PutNewPiece('f', 1, new Bishop(Board, Colour.white));
+            PutNewPiece('g', 1, new Knight(Board, Colour.white));
+            PutNewPiece('h', 1, new Rook(Board, Colour.white));
+            PutNewPiece('a', 2, new Pawn(Board, Colour.white));
+            PutNewPiece('b', 2, new Pawn(Board, Colour.white));
+            PutNewPiece('c', 2, new Pawn(Board, Colour.white));
+            PutNewPiece('d', 2, new Pawn(Board, Colour.white));
+            PutNewPiece('e', 2, new Pawn(Board, Colour.white));
+            PutNewPiece('f', 2, new Pawn(Board, Colour.white));
+            PutNewPiece('g', 2, new Pawn(Board, Colour.white));
+            PutNewPiece('h', 2, new Pawn(Board, Colour.white));
+
+
 
             PutNewPiece('a', 8, new Rook(Board, Colour.black));
-            PutNewPiece('b', 8, new King(Board, Colour.black));
+            PutNewPiece('b', 8, new Knight(Board, Colour.black));
+            PutNewPiece('c', 8, new Bishop(Board, Colour.black));
+            PutNewPiece('d', 8, new Queen(Board, Colour.black));
+            PutNewPiece('e', 8, new King(Board, Colour.black));
+            PutNewPiece('f', 8, new Bishop(Board, Colour.black));
+            PutNewPiece('g', 8, new Knight(Board, Colour.black));
+            PutNewPiece('h', 8, new Rook(Board, Colour.black));
+            PutNewPiece('a', 7, new Pawn(Board, Colour.black));
+            PutNewPiece('b', 7, new Pawn(Board, Colour.black));
+            PutNewPiece('c', 7, new Pawn(Board, Colour.black));
+            PutNewPiece('d', 7, new Pawn(Board, Colour.black));
+            PutNewPiece('e', 7, new Pawn(Board, Colour.black));
+            PutNewPiece('f', 7, new Pawn(Board, Colour.black));
+            PutNewPiece('g', 7, new Pawn(Board, Colour.black));
+            PutNewPiece('h', 7, new Pawn(Board, Colour.black));
         }
     }
 }
