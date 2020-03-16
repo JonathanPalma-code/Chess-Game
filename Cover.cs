@@ -12,11 +12,20 @@ namespace Chess
             PrintBoard(chessTurns.Board);
             PrintCapturedPieces(chessTurns);
             Console.WriteLine($"\n\nTurn: {chessTurns.Turn}");
-            Console.WriteLine($"{chessTurns.PlayerTurn} Player's turn...");
-            if (chessTurns.Xeque)
+            if (!chessTurns.GameOver)
             {
-                Console.WriteLine("XEQUE!");
+                Console.WriteLine($"{chessTurns.PlayerTurn} Player's turn...");
+                if (chessTurns.Xeque)
+                {
+                    Console.WriteLine("XEQUE!");
+                }
             }
+            else
+            {
+                Console.WriteLine("******** XEQUEMATE! ********");
+                Console.WriteLine($"And the Winner is {chessTurns.PlayerTurn}!! ");
+            }
+            
         }
 
         public static void PrintCapturedPieces(ChessTurns chessTurns)

@@ -9,7 +9,7 @@ namespace chessGame
         public Board Board { get; private set; }
         public int Turn { get; private set; }
         public Colour PlayerTurn { get; private set; }
-        public bool EndOfTurn { get; private set; }
+        public bool GameOver { get; private set; }
         private HashSet<Piece> Pieces;
         private HashSet<Piece> Captured;
         public bool Xeque { get; private set; }
@@ -19,7 +19,7 @@ namespace chessGame
             Board = new Board(8, 8);
             Turn = 1;
             PlayerTurn = Colour.white;
-            EndOfTurn = false;
+            GameOver = false;
             Xeque = false;
             Pieces = new HashSet<Piece>();
             Captured = new HashSet<Piece>();
@@ -57,7 +57,7 @@ namespace chessGame
             if (IsInXeque(PlayerTurn))
             {
                 UnmakeMovement(origin, destination, pieceCaptured);
-                throw new BoardException("You cannot execute this movement, you will be in Xeque.");
+                throw new BoardException("You cannot execute this movement, you are in Xeque.");
             }
 
             if (IsInXeque(Opponent(PlayerTurn)))
@@ -69,8 +69,15 @@ namespace chessGame
                 Xeque = false;
             }
 
-            Turn++;
-            ChangePlayer();
+            if (TestXequeMate(Opponent(PlayerTurn)))
+            {
+                GameOver = true;
+            }
+            else
+            {
+                Turn++;
+                ChangePlayer();
+            }
         }
 
         public void OriginPositionValidation(Position position)
@@ -183,21 +190,45 @@ namespace chessGame
             }
             return false;
         }
+
+        public bool TestXequeMate(Colour colour)
+        {
+            if (!IsInXeque(colour))
+            {
+                return false;
+            }
+            foreach (Piece piece in PiecesInGame(colour))
+            {
+                bool[,] vs = piece.PossibleMovements();
+                for (int i = 0; i < Board.Rows; i++)
+                {
+                    for (int j = 0; j < Board.Columns; j++)
+                    {
+                        if (vs[i, j])
+                        {
+                            Position origin = piece.PiecePosition;
+                            Position destination = new Position(i, j);
+                            Piece pieceCaptured = MovePiece(origin, destination);
+                            bool testXeque = IsInXeque(colour);
+                            UnmakeMovement(origin, destination, pieceCaptured);
+                            if (!testXeque)
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+            return true;
+        }
         private void PutPieces()
         {
             PutNewPiece('c', 1, new Rook(Board, Colour.white));
-            PutNewPiece('c', 2, new Rook(Board, Colour.white));
             PutNewPiece('d', 1, new King(Board, Colour.white));
-            PutNewPiece('d', 2, new Rook(Board, Colour.white));
-            PutNewPiece('e', 1, new Rook(Board, Colour.white));
-            PutNewPiece('e', 2, new Rook(Board, Colour.white));
+            PutNewPiece('h', 7, new Rook(Board, Colour.white));
 
-            PutNewPiece('c', 7, new Rook(Board, Colour.black));
-            PutNewPiece('c', 8, new Rook(Board, Colour.black));
-            PutNewPiece('d', 8, new King(Board, Colour.black));
-            PutNewPiece('d', 7, new Rook(Board, Colour.black));
-            PutNewPiece('e', 7, new Rook(Board, Colour.black));
-            PutNewPiece('e', 8, new Rook(Board, Colour.black));
+            PutNewPiece('a', 8, new Rook(Board, Colour.black));
+            PutNewPiece('b', 8, new King(Board, Colour.black));
         }
     }
 }

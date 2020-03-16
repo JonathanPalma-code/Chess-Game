@@ -13,7 +13,7 @@ namespace Chess
             {
                 ChessTurns chessTurns = new ChessTurns();
 
-                while (!chessTurns.EndOfTurn)
+                while (!chessTurns.GameOver)
                 {
                     try
                     {
@@ -40,6 +40,8 @@ namespace Chess
                         Console.ReadLine();
                     }
                 }
+                Console.Clear();
+                Cover.PrintGame(chessTurns);
             }
             catch(BoardException e)
             {
