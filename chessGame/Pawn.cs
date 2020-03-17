@@ -15,7 +15,7 @@ namespace chessGame
         private bool SpotEnemy(Position position)
         {
             Piece piece = Board.Piece(position);
-            return piece != null || piece.Colour != Colour;
+            return piece != null && piece.Colour != Colour;
         }
 
         private bool IsFree(Position position)
@@ -31,25 +31,25 @@ namespace chessGame
 
             if (Colour == Colour.white)
             {
-                position.DefineValues(position.Row - 1, position.Column);
+                position.DefineValues(PiecePosition.Row - 1, PiecePosition.Column);
                 if (Board.IfValidPosition(position) && IsFree(position)){
                     boolboard[position.Row, position.Column] = true;
                 }
 
-                position.DefineValues(position.Row - 2, position.Column);
-                Position position1 = new Position(position.Row - 1, position.Column);
+                position.DefineValues(PiecePosition.Row - 2, PiecePosition.Column);
+                Position position1 = new Position(PiecePosition.Row - 1, PiecePosition.Column);
                 if (Board.IfValidPosition(position1) && IsFree(position1) && Board.IfValidPosition(position) && IsFree(position) && MovementsQuantity == 0)
                 {
                     boolboard[position.Row, position.Column] = true;
                 }
 
-                position.DefineValues(position.Row - 1, position.Column - 1);
+                position.DefineValues(PiecePosition.Row - 1, PiecePosition.Column - 1);
                 if (Board.IfValidPosition(position) && SpotEnemy(position))
                 {
                     boolboard[position.Row, position.Column] = true;
                 }
 
-                position.DefineValues(position.Row - 1, position.Column + 1);
+                position.DefineValues(PiecePosition.Row - 1, PiecePosition.Column + 1);
                 if (Board.IfValidPosition(position) && SpotEnemy(position))
                 {
                     boolboard[position.Row, position.Column] = true;
@@ -57,26 +57,26 @@ namespace chessGame
             }
             else
             {
-                position.DefineValues(position.Row + 1, position.Column);
+                position.DefineValues(PiecePosition.Row + 1, PiecePosition.Column);
                 if (Board.IfValidPosition(position) && IsFree(position))
                 {
                     boolboard[position.Row, position.Column] = true;
                 }
 
-                position.DefineValues(position.Row + 2, position.Column);
-                Position position1 = new Position(position.Row + 1, position.Column);
+                position.DefineValues(PiecePosition.Row + 2, PiecePosition.Column);
+                Position position1 = new Position(PiecePosition.Row + 1, PiecePosition.Column);
                 if (Board.IfValidPosition(position1) && IsFree(position1) && Board.IfValidPosition(position) && IsFree(position) && MovementsQuantity == 0)
                 {
                     boolboard[position.Row, position.Column] = true;
                 }
 
-                position.DefineValues(position.Row + 1, position.Column + 1);
+                position.DefineValues(PiecePosition.Row + 1, PiecePosition.Column + 1);
                 if (Board.IfValidPosition(position) && SpotEnemy(position))
                 {
                     boolboard[position.Row, position.Column] = true;
                 }
 
-                position.DefineValues(position.Row + 1, position.Column - 1);
+                position.DefineValues(PiecePosition.Row + 1, PiecePosition.Column - 1);
                 if (Board.IfValidPosition(position) && SpotEnemy(position))
                 {
                     boolboard[position.Row, position.Column] = true;
