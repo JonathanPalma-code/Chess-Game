@@ -71,6 +71,7 @@ namespace chessGame
             {
                 boolboard[position.Row, position.Column] = true;
             }
+
             return boolboard;
         }
     }
