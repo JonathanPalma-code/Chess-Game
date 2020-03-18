@@ -36,6 +36,27 @@ namespace chessGame
             {
                 Captured.Add(pieceCaptured);
             }
+
+            // #Small castling
+            if (piece is King && destination.Column == origin.Column + 2)
+            {
+                Position RookOriginPosition = new Position(origin.Row, origin.Column + 3);
+                Position RookDestinationPosition = new Position(origin.Row, origin.Column + 1);
+                Piece rook = Board.TakePiece(RookOriginPosition);
+                rook.AddMovements();
+                Board.PutPiece(rook, RookDestinationPosition);
+            }
+
+            // #Big castling
+            if (piece is King && destination.Column == origin.Column - 2)
+            {
+                Position RookOriginPosition = new Position(origin.Row, origin.Column - 4);
+                Position RookDestinationPosition = new Position(origin.Row, origin.Column - 1);
+                Piece rook = Board.TakePiece(RookOriginPosition);
+                rook.AddMovements();
+                Board.PutPiece(rook, RookDestinationPosition);
+            }
+
             return pieceCaptured;
         }
 
@@ -49,6 +70,26 @@ namespace chessGame
                 Captured.Remove(pieceCaptured);
             }
             Board.PutPiece(piece, origin);
+
+            // #Small castling
+            if (piece is King && destination.Column == origin.Column + 2)
+            {
+                Position RookOriginPosition = new Position(origin.Row, origin.Column + 3);
+                Position RookDestinationPosition = new Position(origin.Row, origin.Column + 1);
+                Piece rook = Board.TakePiece(RookDestinationPosition);
+                rook.UnAddMovements();
+                Board.PutPiece(rook, RookOriginPosition);
+            }
+
+            // #Big castling
+            if (piece is King && destination.Column == origin.Column - 2)
+            {
+                Position RookOriginPosition = new Position(origin.Row, origin.Column - 4);
+                Position RookDestinationPosition = new Position(origin.Row, origin.Column - 1);
+                Piece rook = Board.TakePiece(RookDestinationPosition);
+                rook.UnAddMovements();
+                Board.PutPiece(rook, RookOriginPosition);
+            }
         }
 
         public void Play(Position origin, Position destination)
@@ -227,7 +268,7 @@ namespace chessGame
             PutNewPiece('b', 1, new Knight(Board, Colour.white));
             PutNewPiece('c', 1, new Bishop(Board, Colour.white));
             PutNewPiece('d', 1, new Queen(Board, Colour.white));
-            PutNewPiece('e', 1, new King(Board, Colour.white));
+            PutNewPiece('e', 1, new King(Board, Colour.white, this));
             PutNewPiece('f', 1, new Bishop(Board, Colour.white));
             PutNewPiece('g', 1, new Knight(Board, Colour.white));
             PutNewPiece('h', 1, new Rook(Board, Colour.white));
@@ -246,7 +287,7 @@ namespace chessGame
             PutNewPiece('b', 8, new Knight(Board, Colour.black));
             PutNewPiece('c', 8, new Bishop(Board, Colour.black));
             PutNewPiece('d', 8, new Queen(Board, Colour.black));
-            PutNewPiece('e', 8, new King(Board, Colour.black));
+            PutNewPiece('e', 8, new King(Board, Colour.black, this));
             PutNewPiece('f', 8, new Bishop(Board, Colour.black));
             PutNewPiece('g', 8, new Knight(Board, Colour.black));
             PutNewPiece('h', 8, new Rook(Board, Colour.black));
