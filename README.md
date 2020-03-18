@@ -3,20 +3,24 @@
 ## Intro
 
 The project consists in a chess in a console app made in .net Core. The Data is kept in memory.
-Chess is a game of strategy and tactics for two players, played on an 8x8 chequered board. Although chess sets come in many varieties and colours, the traditional colours are white and black. In this case black will be replaced by red, due to the black background of the console. 
 
+Chess is a game of strategy and tactics for two players, played on an 8x8 chequered board. Although chess sets come in many varieties and colours, the traditional colours are white and black. In this case black will be replaced by red, due to the black background of the console.
+
+
+| The Game - in the console App |![ezgif com-crop (4)](https://user-images.githubusercontent.com/55409351/77004281-bc91d800-6956-11ea-841d-997f31cca78a.gif)|
+| -------- | -------- |
 ## How to Play
 ### The Goal
 The aim of the game is to trap your opponent's king, which is called Checkmate. A game can also be won if your opponent gives up (in chess, we call this 'resigning').
 
 ### The army
 Each player has an army consisting of:
-* A king; 
-* A queen; 
-* Two rooks; 
-* Two bishops; 
-* Two knights; 
-* And eight pawns.
+* A king (K); 
+* A queen (Q); 
+* Two rooks (R); 
+* Two bishops (B); 
+* Two knights (H); 
+* And eight pawns (P).
 
 ### Turns and to capture pieces
 Each turn, you must move one piece to a new dash. The player with the white pieces goes first, and after that the players take it in turns to move a piece. There are no dice in chess - every piece has its own way of moving, and it's up to you which one you want to move. Each piece also has the ability to capture, an enemy piece. To do this, you simply move your piece or pawn onto the square occupied by the enemy piece, and it will remove from the board and add into the Black or White Array.
