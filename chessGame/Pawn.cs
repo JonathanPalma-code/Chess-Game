@@ -4,8 +4,12 @@ namespace chessGame
 {
     class Pawn : Piece
     {
-        public Pawn(Board board, Colour colour)
-            : base(board, colour) { }
+        private ChessTurns ChessTurns;
+        public Pawn(Board board, Colour colour, ChessTurns chessTurns)
+            : base(board, colour) 
+        {
+            ChessTurns = chessTurns;
+        }
 
         public override string ToString()
         {
@@ -54,6 +58,21 @@ namespace chessGame
                 {
                     boolboard[position.Row, position.Column] = true;
                 }
+
+                // #En passant
+                if (PiecePosition.Row == 3)
+                {
+                    Position left = new Position(PiecePosition.Row, PiecePosition.Column - 1);
+                    if (Board.IfValidPosition(left) && SpotEnemy(left) && Board.Piece(left) == ChessTurns.EnPassant)
+                    {
+                        boolboard[left.Row - 1, left.Column] = true;
+                    }
+                    Position right = new Position(PiecePosition.Row, PiecePosition.Column + 1);
+                    if (Board.IfValidPosition(right) && SpotEnemy(right) && Board.Piece(right) == ChessTurns.EnPassant)
+                    {
+                        boolboard[right.Row - 1, right.Column] = true;
+                    }
+                }
             }
             else
             {
@@ -80,6 +99,21 @@ namespace chessGame
                 if (Board.IfValidPosition(position) && SpotEnemy(position))
                 {
                     boolboard[position.Row, position.Column] = true;
+                }
+
+                // #En passant
+                if (PiecePosition.Row == 4)
+                {
+                    Position left = new Position(PiecePosition.Row, PiecePosition.Column - 1);
+                    if (Board.IfValidPosition(left) && SpotEnemy(left) && Board.Piece(left) == ChessTurns.EnPassant)
+                    {
+                        boolboard[left.Row + 1, left.Column] = true;
+                    }
+                    Position right = new Position(PiecePosition.Row, PiecePosition.Column + 1);
+                    if (Board.IfValidPosition(right) && SpotEnemy(right) && Board.Piece(right) == ChessTurns.EnPassant)
+                    {
+                        boolboard[right.Row + 1, right.Column] = true;
+                    }
                 }
             }
 
