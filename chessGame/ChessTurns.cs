@@ -141,6 +141,21 @@ namespace chessGame
                 throw new BoardException("You cannot execute this movement, you are in Xeque.");
             }
 
+            Piece piece = Board.Piece(destination);
+
+            // #Promotion
+
+            if (piece is Pawn)
+            {
+                if ((piece.Colour == Colour.white && destination.Row == 0) || (piece.Colour == Colour.black && destination.Row == 7)){
+                    piece = Board.TakePiece(destination);
+                    Pieces.Remove(piece);
+                    Piece Queen = new Queen(Board, piece.Colour);
+                    Board.PutPiece(Queen, destination);
+                    Pieces.Add(Queen);
+                }
+            }
+
             if (IsInXeque(Opponent(PlayerTurn)))
             {
                 Xeque = true;
@@ -159,8 +174,6 @@ namespace chessGame
                 Turn++;
                 ChangePlayer();
             }
-
-            Piece piece = Board.Piece(destination);
 
             // #En passant
             if (piece is Pawn && destination.Row == origin.Row -2 || destination.Row == origin.Row + 2)
