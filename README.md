@@ -11,7 +11,7 @@ Chess is a game of strategy and tactics for two players, played on an 8x8 cheque
 | -------- | -------- |
 ## How to Play
 ### The Goal
-The aim of the game is to trap your opponent's king, which is called Checkmate. A game can also be won if your opponent gives up (in chess, we call this 'resigning').
+The aim of the game is to trap your opponent's king, which is called Checkmate. 
 
 ### The army
 Each player has an army consisting of:
